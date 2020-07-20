@@ -15,7 +15,6 @@ class user_profile : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.user_profile)
         lyt_user_profile.background.alpha = 255
-
         lyt_navdraw.visibility = View.GONE
 
         btnToggleNavdraw.setOnClickListener {
@@ -35,7 +34,6 @@ class user_profile : AppCompatActivity() {
         NavDrawToggle("close")
         finish()
         startActivity(Intent(this@user_profile,user_landing::class.java))
-
     }
 
     fun NavDrawToggle(indicator: String) {
@@ -50,6 +48,5 @@ class user_profile : AppCompatActivity() {
             lyt_navdraw.visibility = View.GONE
             lyt_user_profile.background.alpha = 255
         }
-
     }
 }

@@ -219,6 +219,7 @@
                     android:drawableLeft="@drawable/ic_notifications"
                     android:drawablePadding="10dp"
                     android:text="Notifikasi" />
+
                 <TextView
                     style="@style/TextViewCommonMenu"
                     android:layout_width="wrap_content"
@@ -237,6 +238,7 @@
                     android:drawableLeft="@drawable/ic_mail"/>
 
                 <TextView
+                    android:id="@+id/btnTextRekruitasi"
                     style="@style/TextViewCommonMenu"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -261,10 +263,6 @@
                     android:drawablePadding="10dp"
                     android:text="Login Entitas"
                     android:drawableLeft="@drawable/ic_entitas"/>
-
-
-
-
                 <TextView
                     android:id="@+id/btnTextLogout"
                     style="@style/TextViewCommonMenu"
@@ -277,6 +275,6 @@
         </LinearLayout>
 
 
-        <include layout="@layout/custom_navdraw"/>
+                <include layout="@layout/custom_navdraw"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
