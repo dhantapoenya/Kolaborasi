@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.view.animation.AnimationUtils.loadAnimation
 import com.senjapagi.kolaborasi.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.layout_login.*
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         btnCloseReg.setOnClickListener {
             lyt_register.apply {
-                animation = AnimationUtils.loadAnimation(
+                animation = loadAnimation(
                     context,
                     R.anim.item_animation_gone_bottom
                 )
@@ -39,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 
         btnCloseLogin.setOnClickListener {
             lyt_login.apply {
-                animation = AnimationUtils.loadAnimation(
+                animation = loadAnimation(
                     context,
                     R.anim.item_animation_gone_bottom
                 )
@@ -50,8 +51,7 @@ class MainActivity : AppCompatActivity() {
         btnStartLogin.setOnClickListener {
             lyt_login.apply {
                 visibility = View.VISIBLE
-                animation = AnimationUtils.loadAnimation(
-                    context, R.anim.item_animation_appear_bottom
+                animation =loadAnimation(context, R.anim.item_animation_appear_bottom
                 )
             }
         }
@@ -59,8 +59,7 @@ class MainActivity : AppCompatActivity() {
         btnStartRegister.setOnClickListener {
             lyt_register.apply {
                 visibility = View.VISIBLE
-                animation = AnimationUtils.loadAnimation(
-                    context, R.anim.item_animation_appear_bottom
+                animation = loadAnimation(context, R.anim.item_animation_appear_bottom
                 )
             }
         }

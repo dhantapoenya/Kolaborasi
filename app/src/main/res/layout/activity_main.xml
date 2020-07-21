@@ -6,13 +6,33 @@
     android:layout_height="match_parent"
     android:background="@drawable/rs_onboarding">
 
-
-    <ImageView
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="50dp"
-        android:src="@drawable/rs_motto"
-        app:layout_constraintBottom_toTopOf="@+id/containerBtnLogin" />
+        android:orientation="vertical"
+        android:layout_marginBottom="29dp"
+        android:padding="27dp"
+        app:layout_constraintBottom_toTopOf="@+id/containerBtnLogin"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_display"
+            android:text="Kolaborasi"
+            android:textColor="@color/colorWhite"
+            android:textSize="56sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro_display"
+            android:text="Kelola organisasi-mu lebih mudah dengan
+Kolaborasi !"
+            android:textColor="@color/colorWhite"
+            android:textSize="14sp" />
+    </LinearLayout>
 
 
     <LinearLayout
