@@ -129,6 +129,7 @@
 
                                 <com.google.android.material.textfield.TextInputEditText
                                     android:id="@+id/et_email"
+                                    android:inputType="textEmailAddress"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content" />
                             </com.google.android.material.textfield.TextInputLayout>
@@ -140,11 +141,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:layout_marginTop="10dp"
-                        android:hint="NIM"
+                        android:hint="Username"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/et_nim"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                            android:inputType="textFilter"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -196,6 +199,7 @@
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/et_angkatan"
+                                android:inputType="number"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />
                         </com.google.android.material.textfield.TextInputLayout>

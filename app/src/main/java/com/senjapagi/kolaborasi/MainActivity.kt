@@ -228,14 +228,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             if (password == verifPassword) {
                 if (imageFile == null) {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Anda Belum Memilih Gambar",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    uploadData()
-                }
+                    showMessage("Anda Belum Memilih Foto Profil")
+                } else { uploadData() }
             } else Toast.makeText(
                 this@MainActivity,
                 "Password don't match ! ",
