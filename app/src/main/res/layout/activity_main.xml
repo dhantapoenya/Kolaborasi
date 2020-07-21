@@ -98,4 +98,5 @@ Kolaborasi !"
 
     <include layout="@layout/layout_login"/>
     <include layout="@layout/layout_register"/>
+    <include layout="@layout/layout_loading_transparent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
