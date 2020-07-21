@@ -22,6 +22,8 @@ import com.androidnetworking.common.Priority
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.senjapagi.kolaborasi.Beautifier.DialogBuilder
+import com.senjapagi.kolaborasi.Services.Constant
+import com.senjapagi.kolaborasi.Services.Preference
 import com.senjapagi.kolaborasi.Services.URL
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -46,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        dialogBuilder= DialogBuilder(this,window.decorView)
+        dialogBuilder = DialogBuilder(this, window.decorView)
 
         fab_reg.setOnClickListener { verifyRegister() }
 
@@ -59,11 +61,15 @@ class MainActivity : AppCompatActivity() {
         btnLogin.setOnClickListener {
             btnLogin.visibility = View.GONE
             progress_loading.visibility = View.VISIBLE
-            val c = Handler()
-            c.postDelayed({
-                startActivity(Intent(this@MainActivity, user_landing::class.java))
-                finish()
-            }, 500)
+
+            if (etUsername.text.isNullOrEmpty()) {
+                etUsername.error = "Isi Kolom Ini Terlebih Dahulu"
+            }
+            if (etPassword.text.isNullOrEmpty()) {
+                etPassword.error = "Isi Kolom Ini Terlebih Dahulu"
+            } else {
+                login("user")
+            }
         }
 
         btnCloseReg.setOnClickListener {
@@ -121,37 +127,58 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun checkAndRequestPermission() {
-        if (ContextCompat.checkSelfPermission(this@MainActivity,
-                Manifest.permission.READ_EXTERNAL_STORAGE)
+        if (ContextCompat.checkSelfPermission(
+                this@MainActivity,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            )
             != PackageManager.PERMISSION_GRANTED
         ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this@MainActivity,
-                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this@MainActivity,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
                 Toast.makeText(this, "Accept All Permission Request", Toast.LENGTH_SHORT).show()
             } else {
-                ActivityCompat.requestPermissions(this@MainActivity,
+                ActivityCompat.requestPermissions(
+                    this@MainActivity,
                     arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                     1
                 )
             }
         } else openGallery()
     }
+
+    fun checkPref(){
+        if(Preference(this).getPrefString(Constant.ID).isNullOrEmpty()){
+
+        }else{
+            startActivity(
+                Intent(this@MainActivity,
+                    user_landing::class.java)
+            )
+        }
+    }
+
     private fun login(param: String) {
+
+
         val param = param
         var url: String? = null
         when (param) {
-            "admin" -> {
-                url = URL.LOGIN_ADMIN
-            }
-            "all" -> {
-                url = URL.LOGIN_ALL
-            }
+            "admin" -> url = URL.LOGIN_ADMIN
+            "all" -> url = URL.LOGIN_ALL
+            else -> url = URL.LOGIN_ALL
         }
 
         var login: Intent? = null
-        dialogBuilder.progressType(title = "Loading", content = "Loading", contentText = "Checking Your Credential")
-        progress_loading.visibility=View.VISIBLE
-        btnLogin.visibility=View.VISIBLE
+        dialogBuilder.progressType(
+            title = "Loading",
+            content = "Loading",
+            contentText = "Checking Your Credential"
+        )
+        progress_loading.visibility = View.VISIBLE
+        btnLogin.visibility = View.INVISIBLE
         AndroidNetworking.post(url)
             .addBodyParameter("username", etUsername.text.toString())
             .addBodyParameter("password", etPassword.text.toString())
@@ -159,41 +186,71 @@ class MainActivity : AppCompatActivity() {
             .build()
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject) {
+                    progress_loading.visibility = View.INVISIBLE
+                    btnLogin.visibility = View.VISIBLE
                     dialogBuilder.destroyAll()
+//                    dialogBuilder.success("Login Berhasil","","OK")
                     try {
-                        val message = response.getJSONArray("data").getJSONObject(0).getString("status_login")
-                        val entity = response.getJSONArray("data").getJSONObject(0).getString("username")
-                        if (message.contains("success")) {
-                            Handler().postDelayed({
-                                showMessage("Login Berhasil")
-                                startActivity(login)
-                                finish()
-                            }, 1300)
+                        if (response.getBoolean("success")) {
+                            val resp = response.getJSONObject("data")
+                            val id = resp.getString("id")
+                            val username = resp.getString("username")
+                            val email = resp.getString("email")
+                            val status = resp.getString("status")
+                            val level = resp.getString("level")
+                            showMessage(id)
+
+                            Preference(this@MainActivity).save(Constant.ID, id)
+                            Preference(this@MainActivity).save(Constant.NAMA, id)
+                            Preference(this@MainActivity).save(Constant.EMAIL, id)
+                            Preference(this@MainActivity).save(Constant.USERNAME, id)
+
+                            startActivity(
+                                Intent(this@MainActivity,
+                                user_landing::class.java)
+                            )
+                            finish()
                         } else {
-                            showMessage("Username atau Password Salah")
-                            dialogBuilder.neutralWarning("Error",
-                                "Username atau Password Tidak Ditemukan",
-                                "Coba Lagi")
+                            showMessage(response.getString("message"))
                         }
+//                        if (message.contains("success")) {
+//                            Handler().postDelayed({
+//
+//                                startActivity(login)
+//                                finish()
+//                            }, 1300)
+//                        } else {
+//                            showMessage("Username atau Password Salah")
+//                            dialogBuilder.neutralWarning(
+//                                "Error",
+//                                "Username atau Password Tidak Ditemukan",
+//                                "Coba Lagi"
+//                            )
+//                        }
                     } catch (e: Exception) {
                         dialogBuilder.errorConnection(
                             "Gagal Terhubung Dengan Server",
                             "Silakan Coba Lagi Nanti",
-                            "OK")
+                            "OK"
+                        )
                         e.printStackTrace()
-                        showMessage("Gagal Terhubung Dengan Server")
+                        showMessage("Gagal Terhubung Dengan Server $e")
                     }
                 }
 
                 override fun onError(error: ANError) {
+                    progress_loading.visibility = View.INVISIBLE
+                    btnLogin.visibility = View.VISIBLE
                     dialogBuilder.destroyAll()
                     dialogBuilder.neutralWarning(
                         "Gagal Terhubung Dengan Server",
                         "Periksa Koneksi Internet Anda atau Coba Lagi Nanti",
-                        "OK")
+                        "OK"
+                    )
                 }
             })
     }
+
     private fun openGallery() {
         CropImage.activity()
             .setGuidelines(CropImageView.Guidelines.ON)
@@ -229,12 +286,10 @@ class MainActivity : AppCompatActivity() {
             if (password == verifPassword) {
                 if (imageFile == null) {
                     showMessage("Anda Belum Memilih Foto Profil")
-                } else { uploadData() }
-            } else Toast.makeText(
-                this@MainActivity,
-                "Password don't match ! ",
-                Toast.LENGTH_SHORT
-            ).show()
+                } else {
+                    uploadData()
+                }
+            } else showMessage("Password Tidak Sesuai")
         }
     }
 
@@ -246,7 +301,7 @@ class MainActivity : AppCompatActivity() {
         }
         findViewById<View>(R.id.animation_lootie_loading).visibility = View.VISIBLE
         fab_reg.visibility = View.GONE
-        findViewById<View>(R.id.loading_register).visibility = View.VISIBLE
+        loading_register.visibility = View.VISIBLE
         AndroidNetworking.upload(URL.REGISTASI_PESERTA)
             .addMultipartFile("imageupload", imageFile)
             .addMultipartParameter("nama", et_nama.text.toString())
@@ -263,29 +318,31 @@ class MainActivity : AppCompatActivity() {
             .build()
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject) {
-                    if (response.getString("kode") == "1"){
+                    if (response.getString("kode") == "1") {
                         showMessage("Pendaftaran Berhasil")
-                    }else{
+                    } else {
                         showMessage("Pendaftaran Gagal")
                     }
                     fab_reg.visibility = View.VISIBLE
                     animation_lootie_loading.visibility = View.GONE
                     Toast.makeText(this@MainActivity, response.toString(), Toast.LENGTH_SHORT)
                         .show()
-                 loading_register.visibility = View.GONE
+                    loading_register.visibility = View.GONE
                 }
 
                 override fun onError(anError: ANError) {
-                    dialogBuilder.errorConnection("Pendaftaran Gagal",
-                    "Gagal Terhubung Dengan Server,Coba lagi nanti","OK")
+                    dialogBuilder.errorConnection(
+                        "Pendaftaran Gagal",
+                        "Gagal Terhubung Dengan Server,Coba lagi nanti", "OK"
+                    )
                     animation_lootie_loading.visibility = View.GONE
                     Toast.makeText(
                         this@MainActivity,
                         anError.errorDetail.toString(),
                         Toast.LENGTH_LONG
                     ).show()
-                   fab_reg.visibility = View.VISIBLE
-                   loading_register.visibility = View.GONE
+                    fab_reg.visibility = View.VISIBLE
+                    loading_register.visibility = View.GONE
                 }
             })
     }

@@ -6,6 +6,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.AnimationUtils.loadAnimation
+import com.senjapagi.kolaborasi.Services.Constant
+import com.senjapagi.kolaborasi.Services.Preference
+import com.senjapagi.kolaborasi.Services.URL
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_dashboard_user.*
 import kotlinx.android.synthetic.main.activity_dashboard_user.btnToggleNavdraw
 import kotlinx.android.synthetic.main.custom_navdraw.*
@@ -20,6 +26,17 @@ class user_landing : AppCompatActivity() {
         lyt_navdraw.visibility = View.GONE
         isNavDrawOpen = false
 
+        Picasso.get()
+            .load(URL.PROFILE_PIC_URL+Preference(this).getPrefString(Constant.USERNAME))
+            .memoryPolicy(MemoryPolicy.NO_CACHE )
+            .networkPolicy(NetworkPolicy.NO_CACHE)
+            .error(R.drawable.add_profile)
+            .into(ndIvProfile)
+
+
+        ndTvNama.text = Preference(this).getPrefString(Constant.NAMA)
+        ndTvEmail.text = Preference(this).getPrefString(Constant.EMAIL)
+        ndTvUsername.text = Preference(this).getPrefString(Constant.USERNAME)
 
         btnToggleNavdraw.setOnClickListener {
             NavDrawToggle(1)

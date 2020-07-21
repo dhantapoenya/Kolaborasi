@@ -36,7 +36,7 @@
                     app:cardCornerRadius="50dp">
 
                     <ImageView
-                        android:id="@+id/navDrawProfile"
+                        android:id="@+id/ndIvProfile"
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:src="@drawable/ic_profile" />
@@ -62,6 +62,7 @@
 
 
                 <TextView
+                    android:id="@+id/ndTvNama"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_display"
@@ -70,14 +71,16 @@
                     android:textSize="26sp" />
 
                 <TextView
+                    android:id="@+id/ndTvUsername"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_display"
-                    android:text="S1 Sistem Informasi"
+                    android:text="Username"
                     android:textColor="@color/colorWhite"
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/ndTvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_display"
