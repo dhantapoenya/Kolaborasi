@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentManager
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.senjapagi.kolaborasi.Beautifier.NavDrawSetter
 import com.senjapagi.kolaborasi.Logout
 import com.senjapagi.kolaborasi.R
 import com.senjapagi.kolaborasi.Services.Constant
@@ -53,7 +54,7 @@ class fragment_user_landing : Fragment() {
                 val calendar = Calendar.getInstance()
                 realClock?.text =
                     SimpleDateFormat("HH:mm:ss", Locale.US).format(calendar.time).toString()
-                Handler().postDelayed(this,1000)
+                Handler().postDelayed(this, 1000)
             }
         }, 0)
 
@@ -65,30 +66,10 @@ class fragment_user_landing : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        retrieveUser()
 
 
-        val url = URL.PROFILE_PIC_URL + Preference(context!!).getPrefString(Constant.ID)
-
-        Picasso.get()
-            .load(url)
-            .placeholder(R.drawable.add_profile)
-            .memoryPolicy(MemoryPolicy.NO_CACHE)
-            .networkPolicy(NetworkPolicy.NO_CACHE)
-            .error(R.drawable.add_profile)
-            ?.into(navDrawProfile, object : com.squareup.picasso.Callback {
-                override fun onSuccess() {
-
-                }
-
-                override fun onError(e: java.lang.Exception?) {
-                    //do smth when there is picture loading error
-                }
-            })
-
-        ndTvNama?.text = Preference(context!!).getPrefString(Constant.NAMA)
-        ndTvEmail?.text = Preference(context!!).getPrefString(Constant.EMAIL)
-        ndTvUsername?.text = Preference(context!!).getPrefString(Constant.USERNAME)
-
+        NavDrawSetter(context!!, activity?.window?.decorView!!,"landing").SetNavInfo()
 
         ndBtnHome.setOnClickListener { changeLayout(fragment_user_landing()) }
         ndBtnProfile.setOnClickListener { changeLayout(fragment_user_profile()) }
@@ -130,6 +111,26 @@ class fragment_user_landing : Fragment() {
             lyt_navdraw.visibility = View.GONE
             lyt_landing_user.background.alpha = 255
         }
+    }
+
+    private fun retrieveUser() {
+        AndroidNetworking.post(URL.GET_DETAIL_USER)
+            .addBodyParameter("id", Preference(context!!).getPrefString(Constant.ID))
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    if (response?.getBoolean("success")!!) {
+                        Preference(context!!).save(Constant.USER_PROFILE_URL,
+                            response.getJSONObject("data").getString("profile"))
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+//                    makeToast(anError?.errorDetail.toString())
+                }
+
+            })
+        NavDrawSetter(context!!, activity?.window?.decorView!!,"landing").SetNavInfo()
     }
 
     override fun onCreateView(

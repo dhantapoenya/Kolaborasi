@@ -5,7 +5,7 @@
     android:id="@+id/lyt_landing_user"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/rs_landing"
+    android:background="@color/colorPurplish"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         >
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_home_24dp"
@@ -24,83 +25,78 @@
 
 
         <LinearLayout
-            android:layout_width="416dp"
-            android:layout_height="742dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingStart="25dp"
             android:paddingTop="25dp"
             tools:layout_editor_absoluteX="-5dp"
             tools:layout_editor_absoluteY="-11dp">
 
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp">
-                <ImageView
-                    android:id="@+id/btnToggleNavdraw"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerInParent="true"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:src="@drawable/ic_hamburger" />
-                <TextView
-                    android:layout_marginLeft="20dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_display"
-                    android:text="Landing Page"
-                    android:layout_toRightOf="@id/btnToggleNavdraw"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="33sp" />
-
-            </RelativeLayout>
-
-
             <LinearLayout
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
                 android:id="@+id/containerProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="10dp">
-
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:id="@+id/containerGreeting"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="60dp">
+                    android:orientation="horizontal">
 
                     <ImageView
-                        android:layout_width="120dp"
-                        android:layout_height="120dp"
-                        android:src="@drawable/ic_profile" />
-                </androidx.cardview.widget.CardView>
+                        android:id="@+id/btnToggleNavdraw"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_hamburger"
+                        android:tint="@color/colorPurple" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_display"
-                    android:text="Henry Augusta"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="26sp" />
+                    <TextView
+                        android:id="@+id/realClock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btnToggleNavdraw"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="10:10"
+                        android:textColor="@color/colorNeoBlue"
+                        android:textSize="24sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_display"
-                    android:text="Farmer"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/realDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/realClock"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Minggu, 17 Maret 2020"
+                        android:textColor="@color/colorNeoBlue"
+                        android:textSize="10sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_display"
-                    android:text="henryyy@gmail.com"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="16sp" />
+                    <TextView
+                        android:id="@+id/greetingMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btnToggleNavdraw"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Selamat Malam"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="24sp" />
 
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/greetingMessage"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Henry Augusta"
+                        android:textColor="@color/colorShadow"
+                        android:textSize="16sp" />
+                </RelativeLayout>
             </LinearLayout>
+
 
 
             <androidx.cardview.widget.CardView
@@ -164,40 +160,20 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+
+
+
             <androidx.cardview.widget.CardView
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="21dp"
                 android:id="@+id/containerLastTransaction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 app:cardCornerRadius="21dp">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/montserrat_regular"
-                        android:text="Transaksi Terakhir"
-                        android:textColor="@color/colorBase"
-                        android:textSize="16sp" />
-
-                    <TextView
-                        android:id="@+id/etLastTraansaction"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="50dp"
-                        android:fontFamily="@font/sf_pro_display"
-                        android:text="On The Way"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="20sp" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
             <LinearLayout
+
+                android:padding="10dp"
                 android:id="@+id/containerMenu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -235,6 +211,7 @@
                     android:layout_marginBottom="6dp"
                     android:drawablePadding="10dp"
                     android:text="Invitations"
+
                     android:drawableLeft="@drawable/ic_mail"/>
 
                 <TextView
@@ -272,6 +249,7 @@
                     android:drawablePadding="10dp"
                     android:text="Logout" />
             </LinearLayout>
+            </androidx.cardview.widget.CardView>
         </LinearLayout>
 
 

@@ -7,4 +7,5 @@ object Constant {
     const val USERNAME = "username"
     const val EMAIL = "email"
     const val LEVEL = "level"
+    const val USER_PROFILE_URL = "userprofpic"
 }

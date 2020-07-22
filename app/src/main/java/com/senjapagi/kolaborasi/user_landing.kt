@@ -7,6 +7,8 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.Toast
+import com.androidnetworking.AndroidNetworking
+import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.senjapagi.kolaborasi.Services.Constant
 import com.senjapagi.kolaborasi.Services.Preference
 import com.senjapagi.kolaborasi.Services.URL
@@ -17,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_dashboard_user.*
 import kotlinx.android.synthetic.main.activity_dashboard_user.btnToggleNavdraw
 import kotlinx.android.synthetic.main.custom_navdraw.*
 import kotlinx.android.synthetic.main.user_profile.*
+import org.json.JSONObject
 
 class user_landing : AppCompatActivity() {
 
@@ -76,6 +79,8 @@ class user_landing : AppCompatActivity() {
             startActivity(Intent(this@user_landing, user_recruitment_home::class.java))
         }
     }
+
+
 
     fun NavDrawToggle(indicator: Int) {
         if (indicator == 0) {

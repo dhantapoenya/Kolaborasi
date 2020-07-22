@@ -6,10 +6,13 @@ object URL {
         const val BASE_URL = "http://103.253.27.125:10000/Kolaborasi/"
         const val PROFILE_PIC_URL = "http://103.253.27.125:10000/Kolaborasi/ProfilePic/"
         const val GET_DETAIL_USER = "${BASE_URL}getDetailPeserta.php"
+        const val UPDATE_PESERTA = "${BASE_URL}updatePeserta.php"
+        const val UPDATE_PESERTA_PROFILE = BASE_URL + "updateFotoProfile.php"
         const val LOGIN_ALL = BASE_URL + "loginPeserta.php"
 
 
         const val REGISTASI_PESERTA = BASE_URL + "registrasiPeserta.php"
+
 
 
 

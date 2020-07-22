@@ -16,14 +16,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".LandingContainer"></activity>
-        <activity android:name=".user_recruitment_home" />
-        <activity android:name=".user_profile" />
-        <activity android:name=".user_landing" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".LandingContainer"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation" />
+        <activity
+            android:name=".user_recruitment_home"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user_profile"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".user_landing"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
