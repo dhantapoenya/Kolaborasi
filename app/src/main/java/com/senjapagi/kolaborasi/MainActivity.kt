@@ -43,13 +43,14 @@ class MainActivity : AppCompatActivity() {
     var gender = "L"
     val calendarInstance = Calendar.getInstance()
     lateinit var dialogBuilder: DialogBuilder
+    val calendar = Calendar.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         dialogBuilder = DialogBuilder(this, window.decorView)
-
+        checkPref()
         fab_reg.setOnClickListener { verifyRegister() }
 
         container_profile_pic.setOnClickListener {
@@ -59,8 +60,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnLogin.setOnClickListener {
-            btnLogin.visibility = View.GONE
-            progress_loading.visibility = View.VISIBLE
 
             if (etUsername.text.isNullOrEmpty()) {
                 etUsername.error = "Isi Kolom Ini Terlebih Dahulu"
@@ -68,6 +67,8 @@ class MainActivity : AppCompatActivity() {
             if (etPassword.text.isNullOrEmpty()) {
                 etPassword.error = "Isi Kolom Ini Terlebih Dahulu"
             } else {
+                btnLogin.visibility = View.GONE
+                progress_loading.visibility = View.VISIBLE
                 login("user")
             }
         }
@@ -149,14 +150,14 @@ class MainActivity : AppCompatActivity() {
         } else openGallery()
     }
 
-    fun checkPref(){
-        if(Preference(this).getPrefString(Constant.ID).isNullOrEmpty()){
-
-        }else{
-            startActivity(
-                Intent(this@MainActivity,
-                    user_landing::class.java)
-            )
+    private fun checkPref() {
+        showMessage(Preference(this).getPrefString(Constant.LEVEL).toString())
+        if (Preference(this).getPrefString(Constant.LEVEL).isNullOrEmpty()) {
+        } else {
+            if(Preference(this).getPrefString(Constant.LEVEL)=="user"){
+                startActivity(Intent(this@MainActivity, LandingContainer::class.java))
+            }
+//            etUsername.setText(Preference(this).getPrefString(Constant.USERNAME))
         }
     }
 
@@ -195,20 +196,21 @@ class MainActivity : AppCompatActivity() {
                             val resp = response.getJSONObject("data")
                             val id = resp.getString("id")
                             val username = resp.getString("username")
+                            val nama = resp.getString("nama")
                             val email = resp.getString("email")
                             val status = resp.getString("status")
                             val level = resp.getString("level")
-                            showMessage(id)
+                            showMessage(level)
+//                            showMessage(id +"nama $nama" + "email :" + email + status)
 
                             Preference(this@MainActivity).save(Constant.ID, id)
-                            Preference(this@MainActivity).save(Constant.NAMA, id)
-                            Preference(this@MainActivity).save(Constant.EMAIL, id)
-                            Preference(this@MainActivity).save(Constant.USERNAME, id)
+                            Preference(this@MainActivity).save(Constant.NAMA, nama)
+                            Preference(this@MainActivity).save(Constant.USERNAME, username)
+                            Preference(this@MainActivity).save(Constant.EMAIL, email)
+                            Preference(this@MainActivity).save(Constant.LEVEL, level)
+//                            Preference(this@MainActivity).save(Constant.S, status)
 
-                            startActivity(
-                                Intent(this@MainActivity,
-                                user_landing::class.java)
-                            )
+                            startActivity(Intent(this@MainActivity, LandingContainer::class.java))
                             finish()
                         } else {
                             showMessage(response.getString("message"))
@@ -307,8 +309,8 @@ class MainActivity : AppCompatActivity() {
             .addMultipartParameter("nama", et_nama.text.toString())
             .addMultipartParameter("nim", et_nim.text.toString())
             .addMultipartParameter("password", et_password.text.toString())
-            .addMultipartParameter("kelas", et_angkatan.text.toString())
-            .addMultipartParameter("angkatan", et_kelas.text.toString())
+            .addMultipartParameter("kelas", et_kelas.text.toString())
+            .addMultipartParameter("angkatan", et_angkatan.text.toString())
             .addMultipartParameter("gender", gender.toString())
             .addMultipartParameter("birthdate", birthDay.text.toString())
             .addMultipartParameter("line", et_line.text.toString())

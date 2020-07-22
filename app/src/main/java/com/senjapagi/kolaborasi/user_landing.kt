@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.view.animation.AnimationUtils.loadAnimation
+import android.widget.Toast
 import com.senjapagi.kolaborasi.Services.Constant
 import com.senjapagi.kolaborasi.Services.Preference
 import com.senjapagi.kolaborasi.Services.URL
@@ -26,13 +27,24 @@ class user_landing : AppCompatActivity() {
         lyt_navdraw.visibility = View.GONE
         isNavDrawOpen = false
 
+
+        val url = URL.PROFILE_PIC_URL + Preference(this).getPrefString(Constant.ID)
+
         Picasso.get()
-            .load(URL.PROFILE_PIC_URL+Preference(this).getPrefString(Constant.USERNAME))
-            .memoryPolicy(MemoryPolicy.NO_CACHE )
+            .load(url)
+            .placeholder(R.drawable.add_profile)
+            .memoryPolicy(MemoryPolicy.NO_CACHE)
             .networkPolicy(NetworkPolicy.NO_CACHE)
             .error(R.drawable.add_profile)
-            .into(ndIvProfile)
+            .into(navDrawProfile, object : com.squareup.picasso.Callback {
+                override fun onSuccess() {
 
+                }
+
+                override fun onError(e: java.lang.Exception?) {
+                    //do smth when there is picture loading error
+                }
+            })
 
         ndTvNama.text = Preference(this).getPrefString(Constant.NAMA)
         ndTvEmail.text = Preference(this).getPrefString(Constant.EMAIL)
@@ -67,18 +79,22 @@ class user_landing : AppCompatActivity() {
 
     fun NavDrawToggle(indicator: Int) {
         if (indicator == 0) {
-        closeNavDraw()
+            closeNavDraw()
         } else {
             if (isNavDrawOpen) {
-            closeNavDraw()
+                closeNavDraw()
             } else {
-               openNavDraw()
+                openNavDraw()
             }
         }
 
     }
 
-    fun openNavDraw(){
+    fun makeToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    fun openNavDraw() {
         isNavDrawOpen = true
         lyt_navdraw.visibility = View.VISIBLE
         lyt_navdraw.animation =
@@ -86,7 +102,7 @@ class user_landing : AppCompatActivity() {
         lyt_landing_user.background.alpha = 200
     }
 
-    fun closeNavDraw(){
+    fun closeNavDraw() {
         isNavDrawOpen = false
         lyt_navdraw.animation =
             AnimationUtils.loadAnimation(this, R.anim.fade_transition_animation_go)

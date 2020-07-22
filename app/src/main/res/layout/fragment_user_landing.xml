@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lyt_landing_user"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPurplish"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_home_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@null" />
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="-5dp"
+            tools:layout_editor_absoluteY="-11dp">
+
+            <LinearLayout
+                android:background="@drawable/rs_header1"
+                android:id="@+id/containerProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="125dp"
+                android:orientation="vertical"
+                android:paddingBottom="10dp">
+                <RelativeLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:id="@+id/containerGreeting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/btnToggleNavdraw"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_alignParentStart="true"
+                        android:src="@drawable/ic_hamburger"
+                        android:tint="@color/colorWhite" />
+                    <TextView
+                        android:visibility="gone"
+                        android:layout_marginLeft="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/btnToggleNavdraw"
+                        android:fontFamily="@font/poppins_regular"
+                        android:text="Landing Page"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="25sp" />
+                    <TextView
+                        android:id="@+id/realClock"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btnToggleNavdraw"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="10:10"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:id="@+id/realDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/realClock"
+                        android:layout_alignParentEnd="true"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Minggu, 17 Maret 2020"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="10sp" />
+
+                    <TextView
+                        android:id="@+id/greetingMessage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/btnToggleNavdraw"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Selamat Malam"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="24sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/greetingMessage"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Henry Augusta"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16sp" />
+                </RelativeLayout>
+            </LinearLayout>
+
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/containerPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="21dp">
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Harga TBS Hari Ini"
+                        android:textColor="@color/colorBase"
+                        android:textSize="16sp" />
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/etPriceToday"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginRight="50dp"
+                            android:fontFamily="@font/sf_pro_display"
+                            android:text="Rp 800,25"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="24sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@id/etPriceToday"
+                            android:layout_marginTop="20dp"
+                            android:layout_toRightOf="@id/etPriceToday"
+                            android:fontFamily="@font/sf_pro_display"
+                            android:gravity="end|bottom"
+                            android:text="/Kg"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/sf_pro_display"
+                        android:text="Margin 0,5%"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="21dp"
+                android:id="@+id/containerLastTransaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="21dp">
+                <LinearLayout
+
+                    android:padding="10dp"
+                    android:id="@+id/containerMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawableLeft="@drawable/ic_home_24dp"
+                        android:drawablePadding="10dp"
+                        android:text="Home" />
+                    <TextView
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawableLeft="@drawable/ic_notifications"
+                        android:drawablePadding="10dp"
+                        android:text="Notifikasi" />
+
+                    <TextView
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawableLeft="@drawable/ic_list"
+                        android:drawablePadding="10dp"
+                        android:text="Organisasi Aktif" />
+                    <TextView
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawablePadding="10dp"
+                        android:text="Invitations"
+
+                        android:drawableLeft="@drawable/ic_mail"/>
+
+                    <TextView
+                        android:id="@+id/btnTextRekruitasi"
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawablePadding="10dp"
+                        android:text="Rekruitasi"
+                        android:drawableLeft="@drawable/ic_search"/>
+                    <TextView
+                        android:id="@+id/btnTextProfile"
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawableLeft="@drawable/ic_person"
+                        android:drawablePadding="10dp"
+                        android:text="Profile" />
+                    <TextView
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawablePadding="10dp"
+                        android:text="Login Entitas"
+                        android:drawableLeft="@drawable/ic_entitas"/>
+                    <TextView
+                        android:id="@+id/btnTextLogout"
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawablePadding="10dp"
+                        android:text="Logout" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
+
+
+        <include layout="@layout/custom_navdraw"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
