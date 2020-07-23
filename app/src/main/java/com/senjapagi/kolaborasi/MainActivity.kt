@@ -5,16 +5,16 @@ import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.androidnetworking.AndroidNetworking
@@ -52,12 +52,14 @@ class MainActivity : AppCompatActivity() {
         dialogBuilder = DialogBuilder(this, window.decorView)
         checkPref()
         fab_reg.setOnClickListener { verifyRegister() }
-
+        btn_cancel_register.setOnClickListener { lyt_register.visibility = View.GONE }
         container_profile_pic.setOnClickListener {
             if (Build.VERSION.SDK_INT >= 22)
                 checkAndRequestPermission()
             else openGallery()
         }
+
+
 
         btnLogin.setOnClickListener {
 
@@ -116,12 +118,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+
+        // Checks the orientation of the screen
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Toast.makeText(this, "landscape", Toast.LENGTH_SHORT).show()
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+            Toast.makeText(this, "portrait", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     private val dateSetListener =
         DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             calendarInstance.set(Calendar.YEAR, year)
             calendarInstance.set(Calendar.MONTH, monthOfYear)
             calendarInstance.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            val myFormat = "MM/dd/yyyy" // mention the format you need
+            val myFormat = "MM-dd-yyyy" // mention the format you need
             val sdf = SimpleDateFormat(myFormat, Locale.US)
             birthDay.setText(sdf.format(calendarInstance.getTime()).toString())
         }
@@ -154,7 +167,7 @@ class MainActivity : AppCompatActivity() {
         showMessage(Preference(this).getPrefString(Constant.LEVEL).toString())
         if (Preference(this).getPrefString(Constant.LEVEL).isNullOrEmpty()) {
         } else {
-            if(Preference(this).getPrefString(Constant.LEVEL)=="user"){
+            if (Preference(this).getPrefString(Constant.LEVEL) == "user") {
                 startActivity(Intent(this@MainActivity, LandingContainer::class.java))
             }
 //            etUsername.setText(Preference(this).getPrefString(Constant.USERNAME))
@@ -274,14 +287,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun verifyRegister() {
+        var nid = et_nid.text.toString()
         var nama = et_nama.text.toString()
-        var nim = et_nim.text.toString()
+        var username = et_username.text.toString()
         var email = et_email.text.toString()
         var kelas = et_kelas.text.toString()
         var password = et_password.text.toString()
         var verifPassword = et_verify_password.text.toString()
 
-        if (nama.isEmpty() || kelas.isEmpty() || nim.isEmpty() || email.isEmpty() || password.isEmpty() || verifPassword.isEmpty()) {
+        if (nid.isEmpty() || nama.isEmpty() || kelas.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty() || verifPassword.isEmpty()) {
             Toast.makeText(this@MainActivity, "Fill the Empty Form First !", Toast.LENGTH_SHORT)
                 .show()
         } else {
@@ -301,13 +315,14 @@ class MainActivity : AppCompatActivity() {
             R.id.rb_man -> gender = "L"
             R.id.rb_girl -> gender = "P"
         }
-        findViewById<View>(R.id.animation_lootie_loading).visibility = View.VISIBLE
+        animation_lootie_loading.visibility = View.VISIBLE
         fab_reg.visibility = View.GONE
         loading_register.visibility = View.VISIBLE
         AndroidNetworking.upload(URL.REGISTASI_PESERTA)
             .addMultipartFile("imageupload", imageFile)
             .addMultipartParameter("nama", et_nama.text.toString())
-            .addMultipartParameter("nim", et_nim.text.toString())
+            .addMultipartParameter("username", et_username.text.toString()) // nim as username at database
+            .addMultipartParameter("nid", et_nid.text.toString())
             .addMultipartParameter("password", et_password.text.toString())
             .addMultipartParameter("kelas", et_kelas.text.toString())
             .addMultipartParameter("angkatan", et_angkatan.text.toString())

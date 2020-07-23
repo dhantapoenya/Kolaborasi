@@ -141,11 +141,28 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
                         android:layout_marginTop="10dp"
+                        android:hint="NIM"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_nid"
+                            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                            android:inputType="textFilter"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="0.5"
+                        android:layout_marginTop="10dp"
                         android:hint="Username"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                         <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/et_nim"
+                            android:id="@+id/et_username"
                             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
                             android:inputType="textFilter"
                             android:layout_width="match_parent"
@@ -307,13 +324,13 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/fab_reg"
+                            app:cornerRadius="20dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:backgroundTint="@color/bootstrapBlue"
                             android:fontFamily="@font/montserrat_regular"
                             android:text="Daftar"
-                            app:cornerRadius="10dp"
                             android:textColor="#fff"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent" />
