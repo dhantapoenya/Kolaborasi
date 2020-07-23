@@ -16,11 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".LandingContainer"></activity>
-        <activity android:name=".user_recruitment_home" />
-        <activity android:name=".user_profile" />
-        <activity android:name=".user_landing" />
-        <activity android:name=".MainActivity">
+<!--        <activity android:name=".LandingContainer"></activity>-->
+<!--        <activity android:name=".user_recruitment_home" />-->
+<!--        <activity android:name=".user_profile" />-->
+<!--        <activity android:name=".user_landing" />-->
+        <activity android:name=".Ac_creator">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
