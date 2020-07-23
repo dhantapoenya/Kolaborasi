@@ -144,12 +144,12 @@
         android:layout_width="260dp"
         android:layout_height="44dp"
         android:layout_marginTop="48dp"
-        android:entries="@array/spinner_data"
+
         android:spinnerMode="dropdown"
         android:theme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_constraintStart_toStartOf="@+id/tanggal1"
         app:layout_constraintTop_toBottomOf="@+id/tanggal1" />
-
+<!--    android:entries="@array/spinner_data"-->
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"

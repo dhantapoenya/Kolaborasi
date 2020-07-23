@@ -10,10 +10,10 @@
             android:title="Home" ></item>
         <item
             android:id="@+id/menu2"
-            android:title="Participant" />
+            android:title="Divisi" />
         <item
             android:id="@+id/menu3"
-            android:title="Schedule" />
+            android:title="Agenda" />
         <item
             android:id="@+id/menu4"
             android:title="Manage Helpdesk" />

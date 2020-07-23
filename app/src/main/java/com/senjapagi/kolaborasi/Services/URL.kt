@@ -9,7 +9,11 @@ object URL {
         const val UPDATE_PESERTA = "${BASE_URL}updatePeserta.php"
         const val UPDATE_PESERTA_PROFILE = BASE_URL + "updateFotoProfile.php"
         const val LOGIN_ALL = BASE_URL + "loginPeserta.php"
+
+
         const val LOGIN_ENTITAS = BASE_URL + "loginEntitas.php"
+        const val ADD_DIVISI = BASE_URL + "addDivisi.php"
+        const val GET_DIVISI_USER = BASE_URL + "getDivisi.php"
 
 
         const val REGISTASI_PESERTA = BASE_URL + "registrasiPeserta.php"

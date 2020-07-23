@@ -40,51 +40,55 @@
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             >
-                            <androidx.cardview.widget.CardView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:cardCornerRadius="25dp"
-                                android:layout_gravity="center_vertical"
-                                >
-                                <ImageView
-                                    android:id="@+id/peserta_profile"
-                                    android:layout_width="50dp"
-                                    android:layout_height="50dp"
-                                    android:layout_gravity="center"
-                                    android:scaleType="fitXY"
-                                    android:fontFamily="@font/montserrat_regular"
-                                    android:src="@drawable/add_profile"/>
-                            </androidx.cardview.widget.CardView>
+
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
                                 <TextView
-                                    android:id="@+id/peserta_name"
+                                    android:id="@+id/etDivisiListName"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginStart="10dp"
                                     android:fontFamily="@font/montserrat_regular"
-                                    android:text="Linka Angelia"
+                                    android:text="Nama Divisi"
                                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                                     android:textColor="@color/colorBlueWaves"
                                     android:textStyle="bold"
+                                    />
+                                <TextView
+                                    android:id="@+id/etDivisiListUsername"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="10dp"
+                                    android:fontFamily="@font/montserrat_regular"
+                                    android:text="Username"
+                                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+                                    android:textColor="@color/colorBlueWaves"
                                     />
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:orientation="horizontal">
                                     <TextView
-                                        android:id="@+id/peserta_nim"
+                                        android:id="@+id/etDivisiListDesc"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="10dp"
                                         android:fontFamily="@font/roboto_regular"
-                                        android:text="1202184264"
+                                        android:text="Deskripsi"
                                         android:textColor="#000"
                                         />
                                     <TextView
-                                        android:id="@+id/peserta_id"
+                                        android:id="@+id/etDivisiListID"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginStart="10dp"
+                                        android:fontFamily="@font/roboto_regular"
+                                        android:visibility="gone"
+                                        />
+                                    <TextView
+                                        android:id="@+id/etDivisiListEntitasID"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_marginStart="10dp"
@@ -93,35 +97,7 @@
                                         />
                                 </LinearLayout>
 
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="horizontal"
-                                    >
-                                    <TextView
-                                        android:id="@+id/peserta_angkatan"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:text="2018"
-                                        />
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:text="-"
-                                        android:textStyle="bold"
-                                        android:layout_marginLeft="10dp"
-                                        android:fontFamily="@font/montserrat_regular"/>
-                                    <TextView
-                                        android:id="@+id/peserta_kelas"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginStart="10dp"
-                                        android:fontFamily="@font/roboto_regular"
-                                        android:text="SI4206"
-                                        />
-                                </LinearLayout>
+
                             </LinearLayout>
                             />
                             <TextView
@@ -207,5 +183,6 @@
         android:layout_centerVertical="true"
         android:layout_marginEnd="25dp"
         android:scaleType="fitXY"
+        android:tint="@color/colorBlueWaves"
         app:srcCompat="@drawable/ic_arrow_right" />
 </RelativeLayout>

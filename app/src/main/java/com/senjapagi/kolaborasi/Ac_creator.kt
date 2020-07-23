@@ -31,8 +31,8 @@ class Ac_creator:AppCompatActivity() {
 
         btnkegiatan.setBackgroundColor(Color.parseColor("#092532"))
 
-        val dateSetListener = object : DatePickerDialog.OnDateSetListener{
-            override fun onDateSet(view: DatePicker, year: Int, month: Int, dayOfMonth: Int) {
+        val dateSetListener =
+            DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
                 cal.set(Calendar.YEAR,year)
                 cal.set(Calendar.MONTH,month)
                 cal.set(Calendar.DAY_OF_MONTH,dayOfMonth)
@@ -40,8 +40,7 @@ class Ac_creator:AppCompatActivity() {
                 val sdf = SimpleDateFormat(myFormat, Locale.US)
                 val format1= sdf.format(cal.time)
                 tanggal1.setText(format1)
-                }
-        }
+            }
         tanggal1.setOnClickListener {
             DatePickerDialog(this@Ac_creator, dateSetListener,
                 cal.get(Calendar.YEAR),

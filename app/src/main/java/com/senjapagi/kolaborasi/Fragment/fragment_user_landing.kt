@@ -135,15 +135,16 @@ class fragment_user_landing : Fragment() {
         if (indicator.equals("open")) {
             lyt_navdraw?.visibility = View.VISIBLE
             lyt_navdraw?.animation =
-                AnimationUtils.loadAnimation(context!!, R.anim.fade_transition_animation)
+                loadAnimation(context!!, R.anim.fade_transition_animation)
             lyt_landing_user?.background?.alpha = 200
         } else {
             lyt_navdraw?.animation =
-                AnimationUtils.loadAnimation(context!!, R.anim.fade_transition_animation_go)
+                loadAnimation(context!!, R.anim.fade_transition_animation_go)
             lyt_navdraw?.visibility = View.GONE
             lyt_landing_user?.background?.alpha = 255
         }
     }
+
 
 
     private fun loginEntitas() {
@@ -164,8 +165,14 @@ class fragment_user_landing : Fragment() {
                         animation_lootie_loading.visibility = View.GONE
                         if (response?.getBoolean("success")!!) {
                             startActivity(Intent(activity, OrganizationDashboard::class.java))
+                            val id = response.getJSONObject("data").getString("id")
+                            val nama = response.getJSONObject("data").getString("nama")
+                            val username = response.getJSONObject("data").getString("username")
+                            Preference(context!!).save(Constant.ID_ENTITAS,id)
+                            Preference(context!!).save(Constant.USERNAME_ENTITAS,username)
+                            Preference(context!!).save(Constant.NAMA_ENTITAS,nama)
                         }else{
-                            makeToast(response.toString())
+                         makeToast("Username atau Password Tidak Ditemukan")
                         }
                     }
 

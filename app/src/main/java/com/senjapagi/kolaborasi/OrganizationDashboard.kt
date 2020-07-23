@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.navigation.NavigationView
 import com.senjapagi.kolaborasi.Fragment.fragment_organization_home
 import com.senjapagi.kolaborasi.Fragment.fragment_organization_info
+import com.senjapagi.kolaborasi.Fragment.fragment_organization_manage_agenda
+import com.senjapagi.kolaborasi.Fragment.fragment_organization_manage_divisi
 import kotlinx.android.synthetic.main.activity_organization_dashboard.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -16,6 +18,8 @@ class OrganizationDashboard : AppCompatActivity(), NavigationView.OnNavigationIt
 
     lateinit var fragmentOrgHome: fragment_organization_home
     lateinit var fragmentOrgInfo: fragment_organization_info
+    lateinit var fragmentOrgDivisi: fragment_organization_manage_divisi
+    lateinit var fragmentOrgAgenda: fragment_organization_manage_agenda
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,6 +56,8 @@ class OrganizationDashboard : AppCompatActivity(), NavigationView.OnNavigationIt
 
         fragmentOrgHome = fragment_organization_home()
         fragmentOrgInfo = fragment_organization_info()
+        fragmentOrgDivisi = fragment_organization_manage_divisi()
+        fragmentOrgAgenda = fragment_organization_manage_agenda()
 
         supportFragmentManager
             .beginTransaction()
@@ -65,10 +71,10 @@ class OrganizationDashboard : AppCompatActivity(), NavigationView.OnNavigationIt
                 transactionFragment(fragmentOrgHome)
             }
             R.id.menu2 -> {
-                transactionFragment(fragmentOrgInfo)
+                transactionFragment(fragmentOrgDivisi)
             }
             R.id.menu3 -> {
-                transactionFragment(fragmentOrgInfo)
+                transactionFragment(fragmentOrgAgenda)
             }
             R.id.menu4 -> {
                 transactionFragment(fragmentOrgInfo)
