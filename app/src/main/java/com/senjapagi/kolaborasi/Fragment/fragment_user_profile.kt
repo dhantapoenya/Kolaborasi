@@ -26,8 +26,10 @@ import com.senjapagi.kolaborasi.R
 import com.senjapagi.kolaborasi.Services.Constant
 import com.senjapagi.kolaborasi.Services.Preference
 import com.senjapagi.kolaborasi.Services.URL
+import com.senjapagi.kolaborasi.user_change_profile
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.activity_dashboard_user.*
 import kotlinx.android.synthetic.main.activity_dashboard_user.btnToggleNavdraw
 import kotlinx.android.synthetic.main.custom_navdraw.*
 import kotlinx.android.synthetic.main.fragment_user_profile.*
@@ -70,6 +72,9 @@ class fragment_user_profile : Fragment() {
         tvProfileTelp.text = "loading..."
         tvProfileUsername.setText(Preference(context!!).getPrefString(Constant.USERNAME))
 
+
+
+
 //        ndBtnProfile.setOnClickListener { changeLayout(fragment_user_profile()) }
         ndBtnLogOut.setOnClickListener { Logout(context!!).logoutDialog() }
         ndBtnProfile.setOnClickListener { NavDrawToggle("close") }
@@ -78,11 +83,8 @@ class fragment_user_profile : Fragment() {
         lyt_navdraw_shadow.setOnClickListener { NavDrawToggle("close") }
         retrieveUser()
 
-        ivProfilePict.setOnClickListener {
-
-            if (Build.VERSION.SDK_INT >= 22)
-                checkAndRequestPermission()
-            else openGallery()
+        btnChangeProfile.setOnClickListener {
+            startActivity(Intent(activity,user_change_profile::class.java))
         }
 
         btnUpdateProfile.setOnClickListener {
@@ -111,8 +113,13 @@ class fragment_user_profile : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        retrieveUser()
+    }
+
     fun makeToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, message, Toast.LENGTH_LONG)?.show()
     }
 
     private fun changeLayout(dest: Fragment) {
@@ -130,62 +137,6 @@ class fragment_user_profile : Fragment() {
         startActivity(Intent(activity, dest::class.java))
     }
 
-    private fun openGallery() {
-        CropImage.activity()
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .start(context!!, this);
-    }
-
-
-    fun updateProfilePic() {
-        AndroidNetworking.upload(URL.UPDATE_PESERTA_PROFILE)
-            .addMultipartFile("imageupload", imageFile)
-            .build()
-            .getAsJSONObject(object : JSONObjectRequestListener {
-                override fun onResponse(response: JSONObject) {
-                    if (response.getBoolean("success")) {
-                        DialogBuilder(context!!, activity?.window?.decorView!!).success(
-                            "Success",
-                            "Berhasil Mengganti Foto Profile",
-                            "OK"
-                        )
-                        makeToast("Berhasil Mengganti Foto Profile")
-                    } else {
-                        makeToast("Gagal Mengganti Foto Profile")
-                    }
-                }
-
-                override fun onError(anError: ANError) {
-                    DialogBuilder(context!!, activity?.window?.decorView!!).errorConnection(
-                        "Gagal",
-                        "Gagal Mengupdate Foto Profile",
-                        "OK"
-                    )
-                    makeToast("Gagal Mengganti Foto Profil")
-                }
-            })
-
-    }
-
-
-    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
-        super.startActivityForResult(intent, requestCode, options)
-    }
-
-
-    public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-            val result = CropImage.getActivityResult(data)
-            if (resultCode == Activity.RESULT_OK) {
-                val resultUri = result.uri
-                iv_profile_pic?.setImageURI(resultUri)
-                imageFile = File(resultUri.path)
-            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                val error = result.error
-            }
-        }
-    }
 
 
 
@@ -224,33 +175,34 @@ class fragment_user_profile : Fragment() {
                         val prof_pic = raz.getString("profile")
                         val username = raz.getString("username")
 
-                        tvProfileName.text = nama
-                        tvProfileUsername.text = username
-                        etProfileName.setText(nama)
-                        etProfileEmail.setText(email)
-                        etProfileLine.setText(line_id)
-                        etProfileTelp.setText(telp_no)
-                        etProfileBirthDate.setText(birthDate)
-                        etProfileKelas.setText(kelas)
-                        etProfileKAngkatan.setText(angkatan)
-                        tvProfileTelp.setText(telp_no)
+                        tvProfileName?.text = nama
+                        tvProfileUsername?.text = username
+                        etProfileName?.setText(nama)
+                        etProfileEmail?.setText(email)
+                        etProfileLine?.setText(line_id)
+                        etProfileTelp?.setText(telp_no)
+                        etProfileBirthDate?.setText(birthDate)
+                        etProfileKelas?.setText(kelas)
+                        etProfileKAngkatan?.setText(angkatan)
+                        tvProfileTelp?.text = telp_no
+                        etProfileUsername?.setText(username)
                         when (gender) {
-                            "L" -> rg_gender.check(R.id.rb_man)
-                            "P" -> rg_gender.check(R.id.rb_girl)
-                            "1" -> rg_gender.check(R.id.rb_man)
-                            "2" -> rg_gender.check(R.id.rb_girl)
-                            else -> rg_gender.check(R.id.rb_man)
+                            "L" -> rg_gender?.check(R.id.rb_man)
+                            "P" -> rg_gender?.check(R.id.rb_girl)
+                            "1" -> rg_gender?.check(R.id.rb_man)
+                            "2" -> rg_gender?.check(R.id.rb_girl)
+                            else -> rg_gender?.check(R.id.rb_man)
                         }
                         Preference(context!!).save(Constant.USER_PROFILE_URL, prof_pic)
                     } else {
                         makeToast("Gagal Terhubung Dengan Server")
                     }
                     NavDrawSetter(context!!, activity?.window?.decorView!!, "profile").SetNavInfo()
-                    navDrawProfile.setImageDrawable(ivProfilePict.drawable)
+                    navDrawProfile?.setImageDrawable(ivProfilePict.drawable)
                 }
 
                 override fun onError(anError: ANError?) {
-                    animation_lootie_loading.visibility = View.GONE
+                    animation_lootie_loading?.visibility = View.GONE
                     makeToast(anError?.errorDetail.toString())
                 }
 
@@ -272,6 +224,7 @@ class fragment_user_profile : Fragment() {
             .addBodyParameter("line", etProfileLine.text.toString())
             .addBodyParameter("telp", etProfileTelp.text.toString())
             .addBodyParameter("birthdate", etProfileBirthDate.text.toString())
+            .addBodyParameter("username", etProfileUsername.text.toString())
             .addBodyParameter("kelas", etProfileKelas.text.toString())
             .addBodyParameter("angkatan", etProfileKAngkatan.text.toString())
             .addBodyParameter("gender", gender)
@@ -299,28 +252,6 @@ class fragment_user_profile : Fragment() {
             })
     }
 
-    private fun checkAndRequestPermission() {
-        if (ContextCompat.checkSelfPermission(
-                context!!,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            )
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(
-                    activity!!,
-                    Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-            ) {
-               makeToast("Accept All Permission Request")
-            } else {
-                ActivityCompat.requestPermissions(
-                    activity!!,
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                    1
-                )
-            }
-        } else openGallery()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

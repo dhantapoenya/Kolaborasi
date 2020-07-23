@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         >
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="gone"
             android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -244,12 +245,22 @@
                         android:drawablePadding="10dp"
                         android:text="Profile" />
                     <TextView
+                        android:id="@+id/btnTextLoginEntitas"
                         style="@style/TextViewCommonMenu"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="6dp"
                         android:drawablePadding="10dp"
                         android:text="Login Entitas"
+                        android:drawableLeft="@drawable/ic_entitas"/>
+                    <TextView
+                        android:id="@+id/btnTextDaftarEntitas"
+                        style="@style/TextViewCommonMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:drawablePadding="10dp"
+                        android:text="Pendaftaran Entitas"
                         android:drawableLeft="@drawable/ic_entitas"/>
                     <TextView
                         android:id="@+id/btnTextLogout"
@@ -264,6 +275,8 @@
         </LinearLayout>
 
 
+        <include layout="@layout/layout_login_entitas"/>
         <include layout="@layout/custom_navdraw"/>
+        <include layout="@layout/layout_loading_transparent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

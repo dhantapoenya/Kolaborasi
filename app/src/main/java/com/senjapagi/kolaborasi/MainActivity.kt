@@ -169,6 +169,7 @@ class MainActivity : AppCompatActivity() {
         } else {
             if (Preference(this).getPrefString(Constant.LEVEL) == "user") {
                 startActivity(Intent(this@MainActivity, LandingContainer::class.java))
+                finish()
             }
 //            etUsername.setText(Preference(this).getPrefString(Constant.USERNAME))
         }
@@ -336,7 +337,7 @@ class MainActivity : AppCompatActivity() {
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject) {
                     if (response.getString("kode") == "1") {
-                        showMessage("Pendaftaran Berhasil")
+                        showMessage("Pendaftaran Berhasil,Silakan Login Untuk Melanjutkan")
                     } else {
                         showMessage("Pendaftaran Gagal")
                     }

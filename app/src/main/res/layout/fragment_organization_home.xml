@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="@drawable/rs_background"
+    tools:context=".OrganizationDashboard">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        >
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+
+                <RelativeLayout
+                    android:id="@+id/containerAnim1"
+                    android:layout_width="match_parent"
+                    android:layout_height="140dp"
+                    android:background="@drawable/rs_header1">
+
+                    <ImageView
+                        android:id="@+id/profile"
+                        android:layout_width="90dp"
+                        android:layout_height="90dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="28dp"
+                        android:src="@drawable/ic_profile"></ImageView>
+
+                    <TextView
+                        android:id="@+id/username"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="18dp"
+                        android:layout_toRightOf="@+id/profile"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:text="Admin HRD"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="22dp"></TextView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/username"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_toRightOf="@+id/profile"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="hrd@HMSI"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="16dp"></TextView>
+
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="12dp"
+                        android:tint="@color/colorBlueWaves"
+                        android:src="@drawable/ic_arrow_right"></ImageView>
+
+                </RelativeLayout>
+
+
+
+
+                <LinearLayout
+                    android:id="@+id/containerAnim4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal"
+                    android:weightSum="2">
+
+                    <LinearLayout
+                        android:background="@drawable/rs_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="212"
+                            android:textColor="#313131"
+                            android:textSize="22dp"></TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Anggota"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="18dp"></TextView>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:background="@drawable/rs_card"
+                        android:layout_width="match_parent"
+                        android:layout_height="90dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="125"
+                            android:textColor="#313131"
+                            android:textSize="22dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:text="Agenda Harian"
+                            android:textColor="@color/colorBlack"
+                            android:textSize="18dp" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:id="@+id/containerAnim5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp">
+
+                    <ImageView
+                        android:id="@+id/icon_ir"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_profile">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@id/icon_ir"
+                        android:text="Menu Rekruitasi"
+                        android:textColor="#202020"
+                        android:textSize="20dp"></TextView>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/colorBlueWaves"
+                        android:src="@drawable/ic_arrow_right">
+
+                    </ImageView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/containerAnim6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp">
+
+                    <ImageView
+                        android:id="@+id/icon_ar"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_logo_member">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@id/icon_ar"
+                        android:text="Manage Peserta"
+                        android:textColor="#202020"
+                        android:textSize="20dp"></TextView>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/colorBlueWaves"
+                        android:src="@drawable/ic_arrow_right">
+
+                    </ImageView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/containerAnim7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp">
+
+                    <ImageView
+                        android:id="@+id/icon_set"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_logo_schedule">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@id/icon_set"
+                        android:text="Manage Divisi"
+                        android:textColor="#202020"
+                        android:textSize="20dp"></TextView>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/colorBlueWaves"
+                        android:src="@drawable/ic_arrow_right">
+
+                    </ImageView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/containerHelpdesk"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp">
+
+                    <ImageView
+                        android:id="@+id/icon_sh"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_logo_helpdesk">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@id/icon_sh"
+                        android:text="Helpdesk"
+                        android:textColor="#202020"
+                        android:textSize="20dp"></TextView>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:tint="@color/colorBlueWaves"
+                        android:src="@drawable/ic_arrow_right">
+
+                    </ImageView>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/containerAnim9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="34dp">
+
+                    <ImageView
+                        android:id="@+id/icon_ser"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/ic_settings">
+
+                    </ImageView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="16dp"
+                        android:layout_toRightOf="@id/icon_ser"
+                        android:text="Settings"
+                        android:textColor="#202020"
+                        android:textSize="20dp"></TextView>
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/ic_arrow_back">
+
+                    </ImageView>
+                </RelativeLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

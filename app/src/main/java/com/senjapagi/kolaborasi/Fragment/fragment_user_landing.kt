@@ -9,25 +9,30 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.Toast
 import androidx.fragment.app.FragmentManager
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
+import com.senjapagi.kolaborasi.*
 import com.senjapagi.kolaborasi.Beautifier.NavDrawSetter
-import com.senjapagi.kolaborasi.Logout
-import com.senjapagi.kolaborasi.R
 import com.senjapagi.kolaborasi.Services.Constant
 import com.senjapagi.kolaborasi.Services.Preference
 import com.senjapagi.kolaborasi.Services.URL
-import com.senjapagi.kolaborasi.user_landing
 import com.squareup.picasso.MemoryPolicy
 import com.squareup.picasso.NetworkPolicy
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_dashboard_user.*
 import kotlinx.android.synthetic.main.activity_dashboard_user.btnToggleNavdraw
 import kotlinx.android.synthetic.main.activity_dashboard_user.lyt_landing_user
 import kotlinx.android.synthetic.main.custom_navdraw.*
 import kotlinx.android.synthetic.main.fragment_user_landing.*
+import kotlinx.android.synthetic.main.fragment_user_landing.btnTextLogout
+import kotlinx.android.synthetic.main.fragment_user_landing.btnTextProfile
+import kotlinx.android.synthetic.main.fragment_user_landing.realClock
+import kotlinx.android.synthetic.main.layout_loading_transparent.*
+import kotlinx.android.synthetic.main.layout_login_entitas.*
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
@@ -69,18 +74,45 @@ class fragment_user_landing : Fragment() {
         retrieveUser()
 
 
-        NavDrawSetter(context!!, activity?.window?.decorView!!,"landing").SetNavInfo()
+        NavDrawSetter(context!!, activity?.window?.decorView!!, "landing").SetNavInfo()
 
-        ndBtnHome.setOnClickListener { changeLayout(fragment_user_landing()) }
-        ndBtnProfile.setOnClickListener { changeLayout(fragment_user_profile()) }
-        ndBtnLogOut.setOnClickListener { Logout(context!!).logoutDialog() }
-        btnToggleNavdraw.setOnClickListener { NavDrawToggle("open") }
-        btnCloseNavDraw.setOnClickListener { NavDrawToggle("close") }
-        lyt_navdraw_shadow.setOnClickListener { NavDrawToggle("close") }
+        btnLoginEntitas?.setOnClickListener {
+            loginEntitas()
+        }
+
+        btnTextDaftarEntitas.setOnClickListener {
+            moveActivity(user_create_organization())
+        }
+
+
+        btnTextLoginEntitas?.setOnClickListener {
+            lyt_login_entitas.visibility = View.VISIBLE
+            lyt_login_entitas.animation =
+                loadAnimation(context, R.anim.item_animation_appear_bottom)
+        }
+
+        btnCloseLoginEntitas?.setOnClickListener {
+            lyt_login_entitas.visibility = View.GONE
+            lyt_login_entitas.animation = loadAnimation(context, R.anim.item_animation_gone_bottom)
+        }
+
+
+
+        btnTextLogout?.setOnClickListener { Logout(context!!).logoutDialog() }
+        btnTextProfile?.setOnClickListener { changeLayout(fragment_user_profile()) }
+
+
+
+        ndBtnHome?.setOnClickListener { changeLayout(fragment_user_landing()) }
+        ndBtnProfile?.setOnClickListener { changeLayout(fragment_user_profile()) }
+        ndBtnLogOut?.setOnClickListener { Logout(context!!).logoutDialog() }
+        btnToggleNavdraw?.setOnClickListener { NavDrawToggle("open") }
+        btnCloseNavDraw?.setOnClickListener { NavDrawToggle("close") }
+        lyt_navdraw_shadow?.setOnClickListener { NavDrawToggle("close") }
     }
 
     fun makeToast(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+        Toast.makeText(context, message, Toast.LENGTH_LONG)?.show()
     }
 
     private fun changeLayout(dest: Fragment) {
@@ -101,15 +133,49 @@ class fragment_user_landing : Fragment() {
 
     private fun NavDrawToggle(indicator: String) {
         if (indicator.equals("open")) {
-            lyt_navdraw.visibility = View.VISIBLE
-            lyt_navdraw.animation =
+            lyt_navdraw?.visibility = View.VISIBLE
+            lyt_navdraw?.animation =
                 AnimationUtils.loadAnimation(context!!, R.anim.fade_transition_animation)
-            lyt_landing_user.background.alpha = 200
+            lyt_landing_user?.background?.alpha = 200
         } else {
-            lyt_navdraw.animation =
+            lyt_navdraw?.animation =
                 AnimationUtils.loadAnimation(context!!, R.anim.fade_transition_animation_go)
-            lyt_navdraw.visibility = View.GONE
-            lyt_landing_user.background.alpha = 255
+            lyt_navdraw?.visibility = View.GONE
+            lyt_landing_user?.background?.alpha = 255
+        }
+    }
+
+
+    private fun loginEntitas() {
+        if (etUsernameEntitas.text.toString().isBlank()) {
+            etUsernameEntitas.error = "Required"
+        }
+        if (etPasswordEntitas.text.toString().isBlank()) {
+            etPasswordEntitas.error = "Required"
+        } else {
+            animation_lootie_loading.visibility = View.VISIBLE
+            AndroidNetworking.post(URL.LOGIN_ENTITAS)
+                .addBodyParameter("username", etUsernameEntitas.text.toString())
+                .addBodyParameter("password", etPasswordEntitas.text.toString())
+                .build()
+                .getAsJSONObject(object : JSONObjectRequestListener {
+                    override fun onResponse(response: JSONObject?) {
+                        makeToast(response.toString())
+                        animation_lootie_loading.visibility = View.GONE
+                        if (response?.getBoolean("success")!!) {
+                            startActivity(Intent(activity, OrganizationDashboard::class.java))
+                        }else{
+                            makeToast(response.toString())
+                        }
+                    }
+
+                    override fun onError(anError: ANError?) {
+                        makeToast("Error!!!")
+                        animation_lootie_loading.visibility = View.GONE
+                        makeToast(anError?.errorBody.toString())
+                    }
+
+                })
         }
     }
 
@@ -120,8 +186,10 @@ class fragment_user_landing : Fragment() {
             .getAsJSONObject(object : JSONObjectRequestListener {
                 override fun onResponse(response: JSONObject?) {
                     if (response?.getBoolean("success")!!) {
-                        Preference(context!!).save(Constant.USER_PROFILE_URL,
-                            response.getJSONObject("data").getString("profile"))
+                        Preference(context!!)?.save(
+                            Constant.USER_PROFILE_URL,
+                            response?.getJSONObject("data").getString("profile")
+                        )
                     }
                 }
 
@@ -130,7 +198,7 @@ class fragment_user_landing : Fragment() {
                 }
 
             })
-        NavDrawSetter(context!!, activity?.window?.decorView!!,"landing").SetNavInfo()
+        NavDrawSetter(context!!, activity?.window?.decorView!!, "landing")?.SetNavInfo()
     }
 
     override fun onCreateView(

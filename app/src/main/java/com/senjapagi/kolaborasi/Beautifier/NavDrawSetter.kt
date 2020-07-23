@@ -26,9 +26,9 @@ import org.json.JSONObject
 class NavDrawSetter(val context: Context, val view: View,val ref:String) {
 
     fun SetNavInfo() {
-        view.ndTvEmail.text = Preference(context).getPrefString(Constant.EMAIL)
-        view.ndTvUsername.text = Preference(context).getPrefString(Constant.USERNAME)
-        view.ndTvNama.text = Preference(context).getPrefString(Constant.NAMA)
+        view.ndTvEmail?.text = Preference(context).getPrefString(Constant.EMAIL)
+        view.ndTvUsername?.text = Preference(context).getPrefString(Constant.USERNAME)
+        view.ndTvNama?.text = Preference(context).getPrefString(Constant.NAMA)
         view.landingGreeter?.text = Preference(context).getPrefString(Constant.NAMA)
 
         AndroidNetworking.post(URL.GET_DETAIL_USER)
@@ -49,6 +49,7 @@ class NavDrawSetter(val context: Context, val view: View,val ref:String) {
                         Preference(context).save(Constant.NAMA,response.getJSONObject("data").getString("nama"))
                         Preference(context).save(Constant.USERNAME,response.getJSONObject("data").getString("username"))
                         Preference(context).save(Constant.EMAIL,response.getJSONObject("data").getString("email"))
+                        Preference(context).save(Constant.USER_PROFILE_URL,response.getJSONObject("data").getString("profile"))
                     }
                 }
 
