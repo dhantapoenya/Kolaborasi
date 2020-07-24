@@ -18,7 +18,9 @@ import com.senjapagi.kolaborasi.R
 import com.senjapagi.kolaborasi.Services.Constant
 import com.senjapagi.kolaborasi.Services.Preference
 import com.senjapagi.kolaborasi.Services.URL
+import kotlinx.android.synthetic.main.fragment_organization_manage_agenda.*
 import kotlinx.android.synthetic.main.fragment_organization_manage_divisi.*
+import kotlinx.android.synthetic.main.fragment_organization_manage_divisi.recyclerViewDivisi
 import kotlinx.android.synthetic.main.layout_add_divisi.*
 import kotlinx.android.synthetic.main.layout_loading_transparent.*
 import org.json.JSONObject
@@ -48,6 +50,8 @@ class fragment_organization_manage_divisi : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+
         lyt_manage_divisi.setOnRefreshListener {
             retrieveDivisi()
             lyt_manage_divisi.isRefreshing = false
@@ -147,7 +151,7 @@ class fragment_organization_manage_divisi : Fragment() {
                 Preference(context!!).getPrefString(Constant.ID_ENTITAS)
             )
             .addBodyParameter("username", etDivisiUsername.text.toString())
-            .addBodyParameter("name", etDivisiNama.text.toString())
+            .addBodyParameter("nama", etDivisiNama.text.toString())
             .addBodyParameter("password", etPasswordDivisi.text.toString())
             .addBodyParameter("desc", etDivisiDesc.text.toString())
             .build()
@@ -158,13 +162,13 @@ class fragment_organization_manage_divisi : Fragment() {
                     if (response?.getBoolean("success")!!) {
                         makeToast("Berhasil Menambah Entitas")
                         lyt_add_divisi.visibility = View.GONE
-
+                        retrieveDivisi()
                     }
                 }
 
                 override fun onError(anError: ANError?) {
                     animation_lootie_loading.visibility = View.GONE
-                    makeToast(anError?.errorBody.toString())
+                    makeToast("Gagal Menambah Entitas, Koneksi dengan server bermasalah")
                 }
 
             })
@@ -173,7 +177,6 @@ class fragment_organization_manage_divisi : Fragment() {
 
     fun makeToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT)?.show()
-
     }
 
     override fun onCreateView(

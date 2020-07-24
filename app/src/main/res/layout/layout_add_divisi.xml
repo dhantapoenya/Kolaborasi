@@ -1,144 +1,149 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lyt_add_divisi"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:visibility="visible"
-    android:id="@+id/lyt_add_divisi">
+    android:visibility="visible">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0.3"
-        android:orientation="vertical"
-        android:background="@drawable/rs_cardboard1">
+        android:background="@drawable/rs_cardboard1"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:padding="20dp"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                >
-                <TextView
-                    android:gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:textAlignment="center"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/sf_pro_display_light"
+                        android:gravity="center"
+                        android:text="Tambah Divisi"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="30sp" />
+
+                    <ImageButton
+                        android:id="@+id/btnCloseDivisi"
+                        android:layout_width="54dp"
+                        android:layout_height="54dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerInParent="true"
+                        android:layout_gravity="center"
+                        android:background="@drawable/ic_close_window" />
+                </RelativeLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/containerDivisiNama"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/sf_pro_display_light"
-                    android:textColor="#000"
+                    android:layout_marginTop="17dp"
+                    android:hint="Nama Divisi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDivisiNama"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/containerUserName"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:hint="Username Divisi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDivisiUsername"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
+                        android:inputType="textFilter" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/containerDivisiDesc"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:hint="Deskripsi">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etDivisiDesc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/containerPassword"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="17dp"
+                    android:hint="Password"
+                    app:passwordToggleEnabled="true">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPasswordDivisi"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnDivisiAdd"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/sf_pro_display"
                     android:text="Tambah Divisi"
-                    android:textSize="30sp"/>
-                <ImageButton
-                    android:id="@+id/btnCloseDivisi"
-                    android:layout_centerInParent="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_gravity="center"
-                    android:layout_width="54dp"
-                    android:layout_height="54dp"
-                    android:background="@drawable/ic_close_window"/>
-            </RelativeLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="17dp"
-                android:id="@+id/containerDivisiNama"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nama Divisi"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    app:backgroundTint="@color/colorBase"
+                    app:cornerRadius="20dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDivisiNama"
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    />
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/montserrat_regular"
+                    android:gravity="center"
+                    android:text="Lupa Password ? Klik disini"
+                    android:textAlignment="center"
+                    android:visibility="gone" />
 
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="17dp"
-                android:id="@+id/containerUserName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Username Divisi"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDivisiUsername"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"
-                    android:inputType="textFilter"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="17dp"
-                android:id="@+id/containerDivisiDesc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Deskripsi"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDivisiDesc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_marginTop="17dp"
-                android:id="@+id/containerPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Password"
-                app:passwordToggleEnabled="true"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPasswordDivisi"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.button.MaterialButton
-                android:layout_marginTop="10dp"
-                android:id="@+id/btnDivisiAdd"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                app:cornerRadius="20dp"
-                android:text="Tambah Divisi"
-                android:fontFamily="@font/sf_pro_display"
-                app:backgroundTint="@color/colorBase"/>
-
-
-            <TextView
-                android:visibility="gone"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="Lupa Password ? Klik disini"
-                android:fontFamily="@font/montserrat_regular"/>
-
-        </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
     </LinearLayout>
 
 </LinearLayout>

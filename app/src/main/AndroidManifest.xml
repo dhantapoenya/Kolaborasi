@@ -32,6 +32,10 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".user_create_organization"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".OrganizationDashboard"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />

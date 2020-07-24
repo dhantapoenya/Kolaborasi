@@ -13,6 +13,7 @@ object URL {
 
         const val LOGIN_ENTITAS = BASE_URL + "loginEntitas.php"
         const val ADD_DIVISI = BASE_URL + "addDivisi.php"
+        const val ADD_AGENDA = BASE_URL + "addJadwal.php"
         const val GET_DIVISI_USER = BASE_URL + "getDivisi.php"
 
 
