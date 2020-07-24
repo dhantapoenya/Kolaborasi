@@ -10,15 +10,22 @@ import android.view.animation.AnimationUtils.loadAnimation
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.error.ANError
 import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.jaredrummler.materialspinner.MaterialSpinner
+import com.senjapagi.kolaborasi.Adapter.AdapterAgenda
+import com.senjapagi.kolaborasi.Adapter.AdapterDivisi
+import com.senjapagi.kolaborasi.Model.ModelAgenda
+import com.senjapagi.kolaborasi.Model.ModelDivisi
 import com.senjapagi.kolaborasi.R
 import com.senjapagi.kolaborasi.Services.Constant
 import com.senjapagi.kolaborasi.Services.Preference
 import com.senjapagi.kolaborasi.Services.URL
 import kotlinx.android.synthetic.main.fragment_organization_manage_agenda.*
+import kotlinx.android.synthetic.main.fragment_organization_manage_divisi.*
 import kotlinx.android.synthetic.main.layout_add_agenda.*
 import kotlinx.android.synthetic.main.layout_add_divisi.*
 import kotlinx.android.synthetic.main.layout_loading_transparent.*
@@ -48,12 +55,16 @@ class fragment_organization_manage_agenda : Fragment() {
     var choosenEndDate: String? = null
     var startDateDB: String? = null
     var endDateDB: String? = null
-    var divisiSelected = ""
-    var statusSelected = ""
+    var divisiSelected: String = "def"
+    var statusSelected: String = "def"
+
 
     lateinit var mutableDivisiID: MutableMap<String, Int>
     lateinit var mapDivisiID: Map<String, Int>
     lateinit var data: ArrayList<String>
+
+    var dataAgenda = ArrayList<ModelAgenda>()
+    lateinit var adapterAgenda: AdapterAgenda
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,24 +94,34 @@ class fragment_organization_manage_agenda : Fragment() {
         status.add("Closed")
         spinnerAgendaStatus?.setItems(status)
 
+        recyclerViewAgenda?.setHasFixedSize(true)
+        recyclerViewAgenda?.layoutManager =
+            LinearLayoutManager(context, RecyclerView.VERTICAL, false)
 
-        spinnerAgendaStatus.setOnItemSelectedListener { view, position, id, item ->
-            divisiSelected = item.toString()
+
+
+        spinnerAgendaStatus.setOnItemSelectedListener { _, position, id, item ->
+            statusSelected = item.toString()
         }
-        spinnerAgendaDivisi.setOnItemSelectedListener { view, position, id, item ->
+        spinnerAgendaDivisi.setOnItemSelectedListener { _, position, id, item ->
             makeToast(item.toString())
             divisiSelected = item.toString()
         }
+
+
         lyt_manage_agenda.isEnabled = true
         lyt_manage_agenda?.setOnRefreshListener {
             lyt_manage_agenda.isRefreshing = false
             retrieveDivisi()
+            retrieveAgenda()
 
         }
 
         mutableDivisiID = mutableMapOf<String, Int>()
         data = ArrayList()
         retrieveDivisi()
+        retrieveAgenda()
+
 
         btnAgendaAdd?.setOnClickListener {
             uploadAgenda()
@@ -160,9 +181,144 @@ class fragment_organization_manage_agenda : Fragment() {
         super.onViewCreated(view, savedInstanceState)
     }
 
+
+    private fun uploadAgenda() {
+        when {
+            divisiSelected == "def" || divisiSelected == "Pilih Penyelenggara" -> {
+                makeToast("Pilih Divisi Terlebih Dahulu")
+            }
+            statusSelected == "def" || statusSelected == "Pilih Status" -> {
+                makeToast("Pilih Status Terlebih Dahulu")
+            }
+            etAgendaNama.text.toString().isBlank() -> {
+                etAgendaNama.error = "Required"
+                makeToast("Isi Semua Kolom Terlebih Dahulu")
+            }
+            etAgendaKuota.text.toString().isBlank() -> {
+                etAgendaKuota.error = "Required"
+                makeToast("Isi Semua Kolom Terlebih Dahulu")
+            }
+            etAgendaDesc.text.toString().isBlank() -> {
+                etAgendaDesc.error = "Required"
+                makeToast("Isi Semua Kolom Terlebih Dahulu")
+            }
+            agendaStartDate.text == "YYYY-MM-DD" -> {
+                makeToast("Anda Belum Memilih Tanggal Mulai")
+            }
+            agendaEndDate.text == "YYYY-MM-DD" -> {
+                makeToast("Anda Belum Memilih Tanggal Akhir")
+            }
+            else -> {
+
+                val divisiID = mutableDivisiID[divisiSelected].toString()
+                makeToast(divisiID)
+                val dateStart = agendaStartDate.text.toString()
+                val timeStart = agendaStartTime.text.toString()
+
+                val dateEnd = agendaEndDate.text.toString()
+                val timeEnd = agendaEndTime.text.toString()
+                animation_lootie_loading.visibility = View.VISIBLE
+                AndroidNetworking.post(URL.ADD_AGENDA)
+                    .addBodyParameter("divisi_id", divisiID)
+                    .addBodyParameter("nama", etAgendaNama.text.toString())
+                    .addBodyParameter("kuota", etAgendaKuota.text.toString())
+                    .addBodyParameter(
+                        "entitas_id",
+                        Preference(context!!).getPrefString(Constant.ID_ENTITAS)
+                    )
+                    .addBodyParameter("start", "$choosenStartDate $timeStart")
+                    .addBodyParameter("end", "$choosenEndDate $timeEnd")
+                    .addBodyParameter("desc", etAgendaDesc.text.toString())
+                    .addBodyParameter("loc", etAgendaLoc.text.toString())
+                    .build()
+                    .getAsJSONObject(object : JSONObjectRequestListener {
+                        override fun onResponse(response: JSONObject?) {
+                            animation_lootie_loading.visibility = View.GONE
+                            if (response?.getBoolean("success")!!) {
+                                makeToast("Berhasil Menambah Jadwal")
+                                lyt_add_agenda.visibility = View.GONE
+                                lyt_manage_agenda.isEnabled = true
+                            }
+                        }
+
+                        override fun onError(anError: ANError?) {
+                            animation_lootie_loading.visibility = View.GONE
+                            makeToast(anError?.errorBody.toString())
+                            makeToast("Gagal Menambah Agenda, Koneksi dengan Server Bermasalah")
+                        }
+
+                    })
+                retrieveDivisi()
+                retrieveAgenda()
+            }
+        }
+    }
+
+    private fun retrieveAgenda() {
+        dataAgenda.clear()
+        animation_lootie_loading.visibility = View.VISIBLE
+        AndroidNetworking.post(URL.GET_AGENDA_USER)
+            .addBodyParameter(
+                "entitas_id",
+                Preference(context!!).getPrefString(Constant.ID_ENTITAS)
+            )
+            .build()
+            .getAsJSONObject(object : JSONObjectRequestListener {
+                override fun onResponse(response: JSONObject?) {
+                    animation_lootie_loading.visibility = View.GONE
+
+                    if (response?.getBoolean("success")!!) {
+                        val raz = response.getJSONArray("data")
+                        for (i in 0 until raz.length()) {
+
+
+                            val id = raz.getJSONObject(i).getString("id")
+                            val nama = raz.getJSONObject(i).getString("nama")
+                            val desc = raz.getJSONObject(i).getString("desc")
+                            val id_divisi = raz.getJSONObject(i).getString("id_divisi")
+                            val nama_divisi = raz.getJSONObject(i).getString("nama_divisi")
+                            val id_entitas = raz.getJSONObject(i).getString("id_entitas")
+                            val status = raz.getJSONObject(i).getString("status")
+                            val open_gate = raz.getJSONObject(i).getString("open_gate")
+                            val close_gate = raz.getJSONObject(i).getString("close_gate")
+                            val tempat = raz.getJSONObject(i).getString("tempat")
+                            val kuota = raz.getJSONObject(i).getString("kuota")
+
+                            dataAgenda.add(
+                                ModelAgenda(
+                                    id = id,
+                                    nama_divisi = nama_divisi,
+                                    status = status,
+                                    close_gate = close_gate,
+                                    open_gate = open_gate,
+                                    kuota = kuota,
+                                    lokasi = tempat,
+                                    nama = nama,
+                                    id_divisi = id_divisi,
+                                    id_entitas = id_entitas,
+                                    deskripsi = desc
+                                )
+                            )
+                        }
+                        adapterAgenda = AdapterAgenda(dataAgenda, context!!)
+                        recyclerViewAgenda.adapter = adapterAgenda
+                    } else {
+                        makeToast("Anda Belum Memiliki Agenda")
+                    }
+                }
+
+                override fun onError(anError: ANError?) {
+                    animation_lootie_loading.visibility = View.GONE
+                    makeToast("Gagal Terhubung Dengan Server,Silakan Coba Lagi Nanti (404)")
+                }
+
+            })
+    }
+
     private fun retrieveDivisi() {
         mutableDivisiID.clear()
         data.clear()
+        data.add("Pilih Penyelenggara")
         animation_lootie_loading?.visibility = View.VISIBLE
         AndroidNetworking.post(URL.GET_DIVISI_USER)
             .addBodyParameter(
@@ -188,7 +344,7 @@ class fragment_organization_manage_agenda : Fragment() {
 
                             makeLongToast(mutableDivisiID.toString())
 
-                            data.add("---Pilih Penanggung Jawab---")
+
                             data.add(nama)
                             spinnerAgendaDivisi?.setItems(data)
 
@@ -205,66 +361,6 @@ class fragment_organization_manage_agenda : Fragment() {
             })
     }
 
-
-    private fun uploadAgenda() {
-        if (etAgendaNama.text.toString().isBlank()) {
-            etAgendaNama.error = "Required"
-        } else if (etAgendaKuota.text.toString().isBlank()) {
-            etAgendaKuota.error = "Required"
-        } else if (etAgendaDesc.text.toString().isBlank()) {
-            etAgendaDesc.error = "Required"
-        } else if (agendaStartDate.text == "YYYY-MM-DD") {
-            makeToast("Anda Belum Memilih Tanggal Mulai")
-        } else if (agendaEndDate.text == "YYYY-MM-DD") {
-            makeToast("Anda Belum Memilih Tanggal Akhir")
-        } else {
-
-            val divisiID = mutableDivisiID["$divisiSelected"].toString()
-            makeToast(divisiID)
-            val dateStart = agendaStartDate.text.toString()
-            val timeStart = agendaStartTime.text.toString()
-
-            val dateEnd = agendaEndDate.text.toString()
-            val timeEnd = agendaEndTime.text.toString()
-
-
-
-            animation_lootie_loading.visibility = View.VISIBLE
-            AndroidNetworking.post(URL.ADD_AGENDA)
-                .addBodyParameter("divisi_id", divisiID)
-                .addBodyParameter("nama", etAgendaNama.text.toString())
-                .addBodyParameter("kuota", etAgendaKuota.text.toString())
-                .addBodyParameter("start", "$choosenStartDate $timeStart")
-                .addBodyParameter("end", "$choosenEndDate $timeEnd")
-                .addBodyParameter("desc", etAgendaDesc.text.toString())
-                .addBodyParameter("loc", etAgendaLoc.text.toString())
-                .build()
-                .getAsJSONObject(object : JSONObjectRequestListener {
-                    override fun onResponse(response: JSONObject?) {
-                        animation_lootie_loading.visibility = View.GONE
-                        if (response?.getBoolean("success")!!) {
-//                            makeToast("Berhasil Menambah Jadwal")
-                            lyt_add_agenda.visibility = View.GONE
-
-
-                            tesStart.setText(response?.getString("start"))
-                            tesEnd.setText(response?.getString("end"))
-                        }
-                    }
-
-                    override fun onError(anError: ANError?) {
-                        makeToast("Gagal Menambah Jadwal")
-                        animation_lootie_loading.visibility = View.GONE
-                        makeToast(anError?.errorBody.toString())
-                        makeToast("Gagal Menambah Agenda, Koneksi dengan server bermasalah")
-                    }
-
-                })
-//                retrieveDivisi()
-        }
-
-
-    }
 
     fun makeToast(message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT)?.show()

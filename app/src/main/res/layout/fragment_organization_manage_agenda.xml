@@ -58,30 +58,15 @@
 
         </RelativeLayout>
 
-        <EditText
-            android:id="@+id/tesStart"
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewAgenda"
+            android:layout_below="@+id/relativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/tesEnd"
-            android:background="#fff"
-            android:textColor="#000" />
-
-        <EditText
-            android:id="@+id/tesEnd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/addAgenda"
-            android:background="#fff"
-            android:textColor="#000" />
-
-
-<!--        <androidx.recyclerview.widget.RecyclerView-->
-<!--            android:id="@+id/recyclerViewAgenda"-->
-<!--            android:layout_below="@+id/relativeLayout"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"-->
-<!--            tools:listitem="@layout/list_divisi" />-->
+            android:layout_height="match_parent"
+            tools:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/list_agenda" />
 
         <include layout="@layout/layout_add_agenda"/>
         <include layout="@layout/layout_loading_transparent"/>

@@ -18,6 +18,7 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener
 import com.senjapagi.kolaborasi.*
 import com.senjapagi.kolaborasi.Beautifier.NavDrawSetter
 import com.senjapagi.kolaborasi.Services.Constant
+import com.senjapagi.kolaborasi.Services.PrefEntity
 import com.senjapagi.kolaborasi.Services.Preference
 import com.senjapagi.kolaborasi.Services.URL
 import com.squareup.picasso.MemoryPolicy
@@ -167,10 +168,12 @@ class fragment_user_landing : Fragment() {
                             startActivity(Intent(activity, OrganizationDashboard::class.java))
                             val id = response.getJSONObject("data").getString("id")
                             val nama = response.getJSONObject("data").getString("nama")
+                            val profpic = response.getJSONObject("data").getString("profile")
                             val username = response.getJSONObject("data").getString("username")
-                            Preference(context!!).save(Constant.ID_ENTITAS,id)
-                            Preference(context!!).save(Constant.USERNAME_ENTITAS,username)
-                            Preference(context!!).save(Constant.NAMA_ENTITAS,nama)
+                            PrefEntity(context!!).save(Constant.ID_ENTITAS,id)
+                            PrefEntity(context!!).save(Constant.USERNAME_ENTITAS,username)
+                            PrefEntity(context!!).save(Constant.NAMA_ENTITAS,nama)
+                            PrefEntity(context!!).save(Constant.ENTITAS_PROFILE_URL,profpic)
                         }else{
                          makeToast("Username atau Password Tidak Ditemukan")
                         }

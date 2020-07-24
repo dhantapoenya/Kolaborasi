@@ -3,6 +3,7 @@ package com.senjapagi.kolaborasi
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.ImageView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.Fragment
@@ -11,8 +12,18 @@ import com.senjapagi.kolaborasi.Fragment.fragment_organization_home
 import com.senjapagi.kolaborasi.Fragment.fragment_organization_info
 import com.senjapagi.kolaborasi.Fragment.fragment_organization_manage_agenda
 import com.senjapagi.kolaborasi.Fragment.fragment_organization_manage_divisi
+import com.senjapagi.kolaborasi.Services.Constant
+import com.senjapagi.kolaborasi.Services.PrefEntity
+import com.senjapagi.kolaborasi.Services.Preference
+import com.senjapagi.kolaborasi.Services.URL
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_organization_dashboard.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.custom_navdraw.view.*
+import kotlinx.android.synthetic.main.header_organization.*
+import kotlinx.android.synthetic.main.header_organization.view.*
 
 class OrganizationDashboard : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -26,6 +37,7 @@ class OrganizationDashboard : AppCompatActivity(), NavigationView.OnNavigationIt
         setContentView(R.layout.activity_organization_dashboard)
 
         actionBar?.title = "Pecinta Kucing Tel-U"
+        titleAppbar?.text="Dashboard Admin"
 
         //custom button for drawer toggle
         toggle_drawer.setOnClickListener() {
@@ -36,7 +48,6 @@ class OrganizationDashboard : AppCompatActivity(), NavigationView.OnNavigationIt
             } else
                 drawerLayoutOrganization.openDrawer(GravityCompat.START)
         }
-
 
         //setting the original/native drawer Toggle
         //in this app this val actually never used
@@ -63,8 +74,24 @@ class OrganizationDashboard : AppCompatActivity(), NavigationView.OnNavigationIt
             .beginTransaction()
             .replace(R.id.frame_layout, fragmentOrgHome)
             .commit()
-    }
 
+        val navView = nav_view.getHeaderView(0)
+
+
+        downloadPicasso(navView.ndOrgProfile)
+        navView.ndOrgNama.text=PrefEntity(this).getPrefString(Constant.NAMA_ENTITAS)
+        navView.ndOrgEmail.text=PrefEntity(this).getPrefString(Constant.USERNAME_ENTITAS)
+    }
+    private fun downloadPicasso(target: ImageView){
+        Picasso.get()
+            .load(URL.ENTITAS_PROFILE_PIC_URL + PrefEntity(this).getPrefString(Constant.ENTITAS_PROFILE_URL))
+            .memoryPolicy(MemoryPolicy.NO_CACHE)
+            .networkPolicy(NetworkPolicy.NO_CACHE)
+            .fit()
+            .placeholder(R.drawable.add_profile)
+            .error(R.drawable.add_profile)
+            .into(target)
+    }
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu1 -> {

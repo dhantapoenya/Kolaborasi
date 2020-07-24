@@ -4,7 +4,10 @@ object URL {
         const val website = "https://sas.badanmentoring.org"
         const val base_url = "http://103.253.27.125:10000/Kolaborasi/"
         const val BASE_URL = "http://103.253.27.125:10000/Kolaborasi/"
+
         const val PROFILE_PIC_URL = "http://103.253.27.125:10000/Kolaborasi/ProfilePic/"
+        const val ENTITAS_PROFILE_PIC_URL = "http://103.253.27.125:10000/Kolaborasi/OrgProfile/"
+
         const val GET_DETAIL_USER = "${BASE_URL}getDetailPeserta.php"
         const val UPDATE_PESERTA = "${BASE_URL}updatePeserta.php"
         const val UPDATE_PESERTA_PROFILE = BASE_URL + "updateFotoProfile.php"
@@ -14,7 +17,9 @@ object URL {
         const val LOGIN_ENTITAS = BASE_URL + "loginEntitas.php"
         const val ADD_DIVISI = BASE_URL + "addDivisi.php"
         const val ADD_AGENDA = BASE_URL + "addJadwal.php"
+
         const val GET_DIVISI_USER = BASE_URL + "getDivisi.php"
+        const val GET_AGENDA_USER = BASE_URL + "getAgenda.php"
 
 
         const val REGISTASI_PESERTA = BASE_URL + "registrasiPeserta.php"
